@@ -4,25 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload</title>
+    <title>Image Metadata Extractor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Image Upload</h1>
+        <h1>Image Metadata Extractor</h1>
+
+        <div class="image-capture">
+            <h3 class="section-title">Capture from Webcam</h3>
+            <video id="video" width="400" height="300" autoplay></video>
+            <button id="capture-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Capture Image
+            </button>
+        </div>
+
         <div class="upload-section">
-            <h3>Or Upload an Image</h3>
-            <input type="file" id="file-input" accept="image/*">
-            <h3>Or Use Device Camera</h3>
-            <input type="file" id="camera-input" accept="image/*" capture="environment">
+            <h3 class="section-title">Upload an Image</h3>
+            <div class="file-input-container">
+                <label class="file-input-label" for="file-input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Choose File
+                </label>
+                <input type="file" id="file-input" accept="image/*">
+            </div>
+
+            <h3 class="section-title">Use Device Camera</h3>
+            <div class="file-input-container">
+                <label class="file-input-label" for="camera-input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                        </path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    Open Camera
+                </label>
+                <input type="file" id="camera-input" accept="image/*" capture="environment">
+            </div>
             <p class="info-text">This option will use your device's camera app and preserve metadata like location</p>
         </div>
 
         <div class="image-preview">
+            <h3 class="section-title">Image Preview</h3>
             <canvas id="canvas" width="400" height="300"></canvas>
-            <button id="upload-btn" disabled>Upload Image</button>
+            <button id="upload-btn" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload Image
+            </button>
         </div>
+
         <div id="status-message"></div>
         <div id="metadata-display" class="metadata-container"></div>
     </div>

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const captureBtn = document.getElementById('capture-btn');
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('file-input');
-    const cameraInput = document.getElementById('camera-input'); // Add this line
+    const cameraInput = document.getElementById('camera-input');
     const statusMessage = document.getElementById('status-message');
     const metadataDisplay = document.getElementById('metadata-display');
     const ctx = canvas.getContext('2d');
@@ -131,7 +131,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Rest of your code remains the same...
+    // Function to display metadata
+    function displayMetadata(imageData) {
+        if (!imageData || !metadataDisplay) return;
+
+        let metadataHTML = `
+            <h3>Image Metadata</h3>
+            <div class="image-preview-container">
+                <img src="${imageData.url}" alt="Uploaded image" style="max-width: 300px; max-height: 200px;">
+            </div>
+            <table class="metadata-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+        `;
+
+        // Add basic metadata
+        metadataHTML += `
+            <tr><td>Format</td><td>${imageData.metadata.format || 'Unknown'}</td></tr>
+            <tr><td>Dimensions</td><td>${imageData.metadata.width || 0} x ${imageData.metadata.height || 0}</td></tr>
+            <tr><td>Size</td><td>${formatFileSize(imageData.metadata.size || 0)}</td></tr>
+            <tr><td>Created</td><td>${formatDate(imageData.metadata.created_at)}</td></tr>
+        `;
+
+        // Add EXIF data if available
+        if (imageData.metadata.exif) {
+            for (const [key, value] of Object.entries(imageData.metadata.exif)) {
+                if (value !== null && value !== undefined) {
+                    metadataHTML += `<tr><td>${formatExifKey(key)}</td><td>${formatExifValue(key, value)}</td></tr>`;
+                }
+            }
+        }
+
+        // Add GPS data if available
+        if (imageData.metadata.location) {
+            metadataHTML += `
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        ${imageData.metadata.location.latitude}, ${imageData.metadata.location.longitude}
+                        <br>
+                        <a href="https://maps.google.com/?q=${imageData.metadata.location.latitude},${imageData.metadata.location.longitude}" target="_blank">View on Google Maps</a>
+                    </td>
+                </tr>
+            `;
+        }
+
+        metadataHTML += `</table>`;
+        metadataDisplay.innerHTML = metadataHTML;
+    }
+
+    // Helper functions for formatting metadata
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'Unknown';
+        return new Date(dateString).toLocaleString();
+    }
+
+    function formatExifKey(key) {
+        return key
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/^./, str => str.toUpperCase())
+            .trim();
+    }
+
+    function formatExifValue(key, value) {
+        if (key.toLowerCase().includes('date')) {
+            try {
+                return new Date(value).toLocaleString();
+            } catch (e) {
+                return value;
+            }
+        }
+        return value;
+    }
 
     // Start the camera when page loads
     startCamera();
