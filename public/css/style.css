@@ -142,7 +142,16 @@ button:disabled {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
 }
+.info-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}
 
+#camera-input {
+    margin-top: 10px;
+}
 .metadata-table {
     width: 100%;
     border-collapse: collapse;

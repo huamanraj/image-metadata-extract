@@ -11,14 +11,14 @@
 <body>
     <div class="container">
         <h1>Image Upload</h1>
-        <div class="image-capture">
-            <video id="video" width="400" height="300" autoplay></video>
-            <button id="capture-btn">Capture Image</button>
-        </div>
         <div class="upload-section">
             <h3>Or Upload an Image</h3>
             <input type="file" id="file-input" accept="image/*">
+            <h3>Or Use Device Camera</h3>
+            <input type="file" id="camera-input" accept="image/*" capture="environment">
+            <p class="info-text">This option will use your device's camera app and preserve metadata like location</p>
         </div>
+
         <div class="image-preview">
             <canvas id="canvas" width="400" height="300"></canvas>
             <button id="upload-btn" disabled>Upload Image</button>
