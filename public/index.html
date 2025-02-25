@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Upload</h1>
+        <div class="image-capture">
+            <video id="video" width="400" height="300" autoplay></video>
+            <button id="capture-btn">Capture Image</button>
+        </div>
+        <div class="upload-section">
+            <h3>Or Upload an Image</h3>
+            <input type="file" id="file-input" accept="image/*">
+        </div>
+        <div class="image-preview">
+            <canvas id="canvas" width="400" height="300"></canvas>
+            <button id="upload-btn" disabled>Upload Image</button>
+        </div>
+        <div id="status-message"></div>
+        <div id="metadata-display" class="metadata-container"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
